@@ -47,15 +47,19 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Create release
         id: create_release
-        uses: actions/create-release@v1
+        uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          tag_name: ${{ github.run_number }}
+          tag: ${{ github.run_number }}
+          commit: lab
           release_name: Release ${{ github.run_number }}
           body: New release for ${{ github.sha }}. Release notes can be found in the docs.
           draft: false
           prerelease: false
+
